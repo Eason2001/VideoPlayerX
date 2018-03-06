@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/onsenui.css">
+    <link rel="stylesheet" href="css/onsen-css-components.min.css">
+    <script src="lib/onsenui.min.js"></script>
+</head>
+<body>
+
+<ons-navigator swipeable id="mainNavigator" page="page1.html"></ons-navigator>
+
+<template id="page1.html">
+    <ons-page id="page1">
+        <ons-toolbar>
+            <div class="left">Home</div>
+        </ons-toolbar>
+
+        <iframe id="ifm" align="center" frameborder=0 scrolling=no src="videoPlayer.html"></iframe>
+
+        <ons-button id="push-button">Push page</ons-button>
+    </ons-page>
+</template>
+
+<template id="page2.html">
+    <ons-page id="page2">
+        <ons-toolbar>
+            <div class="left"><ons-back-button>Back</ons-back-button></div>
+            <div class="center"></div>
+        </ons-toolbar>
+
+        <p>This is the second page.</p>
+    </ons-page>
+</template>
+
+<script type="text/javascript">
+    document.addEventListener('init', function(event) {
+        var page = event.target;
+
+        if (page.id === 'page1') {
+            page.querySelector('#push-button').onclick = function() {
+                document.querySelector('#mainNavigator').pushPage('page2.html', {data: {title: 'Page 2'}});
+            };
+        } else if (page.id === 'page2') {
+            page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+        }
+
+        var iframe = document.getElementById("ifm");
+        iframe.width = document.documentElement.clientWidth;
+        iframe.height = iframe.width * 0.82;
+
+    });
+</script>
+
+</body>
+</html>

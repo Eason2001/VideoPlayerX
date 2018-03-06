@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="icon" href="ssimwave_symbol_full_colour_q8p_icon.ico" type="image/x-icon"/>
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="utf-8">
+    <meta name=viewport content="initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="lib/platform.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
+    <script src="lib/jquery.visible.min.js"></script>
+
+
+    <!--<link rel="icon" href="favicon.ico">-->
+
+    <title>SSIMPLUS LiveMonitor Client</title>
+
+    <link href="style.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="lib/toggle-switch.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+
+<body>
+
+<div class="demoContainer" id="demoContainer">
+
+    <div id="topControlBar" class="topControlBar">
+        <span class="ssimlogo">
+            <img src="res/logo_A.png">
+        </span>
+        <span class="meterIcon">
+            <img src="res/meter-icon.png">
+        </span>
+        <span class="switch meter" id="">
+            <input id="meter-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+            <label class='toggle' for="meter-toggle"></label>
+        </span>
+        <span class="chartIcon">
+            <img src="res/chart-icon.png">
+        </span>
+        <span class="switch chart">
+            <input id="chart-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+            <label class='toggle' for="chart-toggle"></label>
+        </span>
+        <span class="networkSpeed controlBarText" id="networkSpeed">
+            5.00 Mb/s
+        </span>
+        <span class="lowBitrateIcon">
+            <img src="res/bitrate-low-icon.png">
+        </span>
+        <span class="bitrateSlider" id="bitrateSlider">
+            <input type="range" min="100" max="10000" value="5000" class="slider" id="myRange">
+        </span>
+        <span class="highBitrateIcon">
+            <img src="res/bitrate-high-icon.png">
+        </span>
+
+    </div>
+
+    <div class="containeroverlay">
+        <video id=example-video class="video-js vjs-default-skin vjs-fluid" controls></video>
+        <!--<div class="mockVidPlayer">Totally a video player</div>-->
+        <div class="lineGraphContainer" id="lineGraphContainer" style="display:none;">
+            <canvas class="qoeChartCanvas" id="qoeChart"></canvas>
+            <img class="graphOverlayNumbers" src="res/chart_A.png">
+            <img class="graphOverlayAxis" src="res/chart_B.png">
+        </div>
+        <canvas id="qoeMeter" width="280" height="200" class="meterCanvas" style="display:none"></canvas>
+    </div>
+
+    <div id="bottomControlBar" class="bottomControlBar">
+        <div class="container1">
+            <img src="res/buffering-load.png">
+            <span class="bufferingTime controlBarText" id="bufferTimeDisplay">
+            </span>
+        </div>
+
+        <div class="container2">
+             <img src="res/download-speed.png">
+            <span class="downloadSpeed controlBarText" id="bandwidthDisplay">
+                loading
+            </span>
+        </div>
+
+        <div class="container3">
+                <img src="res/video-bitrate.png">
+             <span class="videoBitrate controlBarText" id="videoBitrateDisplay">
+             </span>
+        </div>
+
+        <div class="container4">
+            <span onclick="dropMenu()" class="folderIcon dropdown">
+            <img src="res/VideoIcon.png" class="dropbtn">
+              <div id="myDropdown" class="dropdown-content">
+                <a id="helicopterLoad" href="#">Helicopter</a>
+                <a id="soccerLoad" href="#">Soccer</a>
+                <a id="springLoad" href="#">Spring</a>
+              </div>
+            </span>
+            <span id="videoNameDisplay" class="videoName controlBarText">
+            Soccer
+            </span>
+        </div>
+
+    </div>
+</div>
+
+
+<div style="display:none">
+    Your device is a: <span id="deviceType"></span>
+</div>
+<div style="display:none">
+    <table align="center">
+        <tr>
+            <th>
+                Segment Number:
+            </th>
+            <th id="SegNumber">
+                0
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Quality:
+            </th>
+            <th id="Quality">
+                0
+            </th>
+        </tr>
+    </table>
+</div>
+<link href="video-js.css" rel="stylesheet">
+<script src="lib/speedtest.js"></script>
+<script src="js/downloadSpeedController.js"></script>
+<script src="config.js"></script>
+<script src="js/NetworkSpeedSwitches.js"></script>
+<script src="js/UIControl.js"></script>
+<script type='text/javascript' src="http://wurfljs.com/wurfl.js"></script>
+<script src="lib/video.js"></script>
+<script src="lib/videojs-stop-button.min.js"></script>
+<script src="lib/dash-official.js"></script>
+<script src="lib/videojs-dash.js"></script>
+<script src="lib/chart.js"></script>
+<script src="lib/network.js"></script>
+<script src="qoeGraph/qoeGraph.js"></script>
+<script src="qoeGraph/qoeMeter.js"></script>
+<script src="qoeGraph/qoeChartController.js"></script>
+<script src="js/playerSetup.js"></script>
+<script src="js/infoBarController.js"></script>
+
+<!--QOE MEASUREMENT SNIPPET-->
+<script src="qoeMonitoringPlugin.js"></script>
+<script>startQoeMonitoring("ABCD12EFGH")</script>
+<!--END QOE MEASUREMENT SNIPPET-->
+</body>
+</html>
